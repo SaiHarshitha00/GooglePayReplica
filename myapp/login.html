@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User-Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 300px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #4285f4;
+        }
+        .container input[type="text"],
+        .container input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .container input[type="submit"] {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .container input[type="submit"]:hover {
+            background-color: #357ae8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form action="http://localhost:3000/login" method="POST" id="loginForm">
+            <input type="text" name="userid" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <br>
+            <br>
+            <!-- <a href="forgetpassword.html" align="right">Forget password?</a> -->
+            <br>
+            <br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    <script>
+        // JavaScript for handling form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const userid = document.getElementsByName('userid')[0].value;
+            const password = document.getElementsByName('password')[0].value;
+
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userid, password })
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error('Login failed');
+                }
+                localStorage.setItem('token', data.token);
+                alert('Login successful!');
+                window.location.href = 'bank_details.html'; // Redirect to home page
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Invalid username or password');
+            }
+        });
+    </script>
+</body>
+</html>

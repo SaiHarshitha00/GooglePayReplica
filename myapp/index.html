@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayIT Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4285f4;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        .carousel {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+        .carousel img {
+            width: 100%;
+            height: 300px;
+            display: block;
+        }
+        .sidebar {
+            background-color: #3778d8;
+            color: white;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            z-index: 999;
+        }
+        .sidebar .profile {
+            text-align: center;
+            padding: 10px;
+        }
+        .sidebar .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .sidebar .profile h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .sidebar .menu {
+            margin-top: 30px;
+        }
+        .sidebar .menu a {
+            display: block;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .sidebar .menu a:hover {
+            background-color: #575757;
+        }
+        .main {
+            padding: 80px 20px 20px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: margin-left 0.3s ease;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 50px;
+            text-align: center;
+        }
+        .card a {
+            text-decoration: none;
+            color: #4285f4;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .card h2 {
+            margin: 0 0 10px;
+        }
+        .card p {
+            color: #777;
+        }
+        .footer {
+            background-color: #4285f4;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            transition: left 0.3s ease;
+        }
+        .logo {
+            position: fixed;
+            top: 30px;
+            left: 20px;
+            z-index: 1001;
+            cursor: pointer;
+        }
+        .logo img {
+            width: 30px;
+            height: 30px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .modal-content input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            left: 300px;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 30px;
+            padding: 0;
+        }
+        .submit-btn{
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .modal-content button:hover {
+            background-color: #357ae8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header" id="header">
+        <h1>PayIT Dashboard</h1>
+    </div>
+    <div class="logo" onclick="toggleSidebar()">
+        <img src="logo2.png" alt="Logo">
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="profile">
+            <img src="profile.jpg" alt="Profile Picture">
+            <h2 id="username">Loading...</h2>
+        </div>
+        <div class="menu">
+            <a href="profile.html" target="_self">Profile</a>
+            <a href="help.html">Help</a>
+            <!-- <a href="language.html">Language</a> -->
+            <a href="settings.html">Settings</a>
+            <a href="home.html">Logout</a>
+        </div>
+    </div>
+    <div class="main" id="main">
+        <div class="carousel">
+            <img src="image4.jpg" alt="Image 4">
+            <img src="image1.jpg" alt="Image 1">
+            <img src="image2.jpg" alt="Image 2">
+            <img src="image3.jpg" alt="Image 3">
+            <img src="image6.png" alt="Image 5">
+        </div>
+        <div class="card">
+            <h2>Send Money</h2>
+            <p>Quickly send money to your friends and family.</p>
+            <a href="send_money.html">Go to Send Money</a>
+        </div>
+        <div class="card">
+            <h2>Pay Bills</h2>
+            <p>Conveniently pay your utility bills.</p>
+            <a href="pay_bills.html">Go to Pay Bills</a>
+        </div>
+        <div class="card">
+            <h2>Transactions</h2>
+            <p>View your transaction history.</p>
+            <a href="#" onclick="showPinModal('transactions.html')">Go to Transactions</a>
+        </div>
+        <div class="card">
+            <h2>Check Balance</h2>
+            <p>View your account balance.</p>
+            <a href="#" onclick="showPinModal('check_balance.html')">Go to Check Balance</a>
+        </div>
+        <div class="footer" id="footer">
+            <p>&copy; 2024 PayIT. All rights reserved.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="pinModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="hidePinModal()" >×</button>
+            <h2>Enter PIN</h2>
+            <input type="password" id="pinInput" placeholder="Enter PIN" required>
+            <button onclick="verifyPin()" class="submit-btn">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        var correctPin = "1234"; // Change this to the correct PIN
+        var redirectUrl = "";
+        document.addEventListener('DOMContentLoaded', async function(e) {
+            e.preventDefault();
+
+            const token = localStorage.getItem('token'); // Get the token from localStorage
+
+            if (!token) {
+                alert('Not authenticated');
+                window.location.href = 'login.html'; // Redirect to login page if not authenticated
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/user', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+
+                const data = await response.json();
+                document.getElementById('username').innerText = `Welcome, ${data.userid}`;
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+                alert('Failed to load user data');
+                window.location.href = 'login.html'; // Redirect to login page on error
+            }
+        });
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var main = document.getElementById('main');
+            var header = document.getElementById('header');
+            var footer = document.getElementById('footer');
+
+            if (sidebar.style.left === '-250px') {
+                sidebar.style.left = '0';
+                main.style.marginLeft = '250px';
+                header.style.left = '250px';
+                footer.style.left = '250px';
+            } else {
+                sidebar.style.left = '-250px';
+                main.style.marginLeft = '0';
+                header.style.left = '0';
+                footer.style.left = '0';
+            }
+        }
+
+        function showPinModal(url) {
+            redirectUrl = url;
+            document.getElementById('pinModal').style.display = 'flex';
+        }
+
+        function verifyPin() {
+            var enteredPin = document.getElementById('pinInput').value;
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found, please login first');
+                return;
+            }
+            fetch('http://localhost:3000/api/get-pin', {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}`
+            }
+            })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Expecting JSON response
+        })
+        .then(data => {
+            const correctPin = data.pin;
+            
+            if (enteredPin === correctPin) {
+                window.location.href = redirectUrl;
+            } else {
+                alert("Incorrect PIN. Please try again.");
+            }
+        })
+        .catch(error => console.error('Error fetching PIN:', error));
+           
+        }
+            // var pin = document.getElementById('pinInput').value;
+            // if (pin === correctPin) {
+            //     window.location.href = redirectUrl;
+            // } else {
+            //     alert("Incorrect PIN. Please try again.");
+            // }
+        
+        function hidePinModal() {
+            document.getElementById('pinModal').style.display = 'none';
+        }
+        // Automatically scroll through carousel
+        var currentIndex = 0;
+        var images = document.querySelectorAll('.carousel img');
+        var interval = setInterval(function() {
+            images[currentIndex].style.display = 'none';
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].style.display = 'block';
+        }, 3000); // Change the time interval as needed
+           
+
+    </script>
+</body>
+</html>

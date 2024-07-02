@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #4285f4;
+            text-align: center;
+        }
+        .details {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .details span {
+            display: block;
+            font-size: 14px;
+            color: #555;
+        }
+        .protected-section {
+            display: none;
+        }
+        .show {
+            display: block;
+        }
+        .pin-input {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .pin-input input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .pin-input button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4285f4;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Personal Details</h2>
+        <div id="personalDetails" class="details">
+            <!-- Personal details will be dynamically added here -->
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Bank Details</h2>
+        <div id="pinSection" class="pin-input">
+            <input type="password" id="pin" placeholder="Enter PIN">
+            <button onclick="checkPin()">Submit</button>
+        </div>
+        <div id="bankDetails" class="details protected-section">
+            <!-- Bank details will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchPersonalDetails();
+        });
+
+        function fetchPersonalDetails() {
+            const token = localStorage.getItem('token'); // Get the token from localStorage
+
+            if (!token) {
+                alert('Not authenticated');
+                window.location.href = 'index.html'; // Redirect to login page if not authenticated
+                return;
+            }
+
+            fetch('http://localhost:3000/api/user-details', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => response.json())
+            .then(user => {
+                document.getElementById('personalDetails').innerHTML = `
+                    <span><strong>UserID:</strong> ${user.userid}</span>
+                    <span><strong>Name:</strong> ${user.name}</span>
+                    <span><strong>Email:</strong> ${user.email}</span>
+                `;
+            })
+            .catch(error => {
+                console.error('Error fetching personal details:', error);
+                alert('Failed to fetch personal details');
+            });
+        }
+
+        function checkPin() {
+    const pin = document.getElementById('pin').value;
+    const token = localStorage.getItem('token'); // Get the token from localStorage
+
+    if (!pin) {
+        alert('Please enter PIN');
+        return;
+    }
+
+    fetch('http://localhost:3000/api/verify-pin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ pin: pin })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+        }
+        return response.json();
+    })
+    .then(user => {
+        document.getElementById('bankDetails').innerHTML = `
+            <span><strong>Bank Name:</strong> ${user.bank_name}</span>
+            <span><strong>Account Number:</strong> ${user.account_number}</span>
+            <span><strong>Balance:</strong> ₹${user.balance}</span>
+        `;
+        document.getElementById('bankDetails').classList.add('show');
+    })
+    .catch(error => {
+        console.error('Error verifying PIN:', error);
+        alert(`Failed to verify PIN: ${error.message}`);
+    });
+}
+
+    </script>
+</body>
+</html>

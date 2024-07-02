@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Pay Replica - Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            flex: 1;
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .setting-section {
+            margin-bottom: 20px;
+        }
+        .setting-item {
+            margin-bottom: 10px;
+        }
+        .setting-item label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .setting-item input, .setting-item select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .setting-item button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .setting-item button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .dropdown {
+            cursor: pointer;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+        }
+        .dropdown-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Google Pay Replica - Settings</h1>
+        <p>Configure your account settings below. Make sure to save changes before leaving the page.</p>
+        
+        <!-- Account Settings Dropdown -->
+        <div class="setting-section">
+            <div class="dropdown" onclick="toggleDropdown('account-settings-dropdown')">
+                <h2>Account Settings</h2>
+                <span>&#9662;</span>
+            </div>
+            <div class="dropdown-content" id="account-settings-dropdown">
+                <div class="setting-item">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username">
+                </div>
+                
+                <div class="setting-item">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                
+                <div class="setting-item">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment Settings Dropdown -->
+        <!-- <div class="setting-section">
+            <div class="dropdown" onclick="toggleDropdown('payment-settings-dropdown')">
+                <h2>Payment Settings</h2>
+                <span>&#9662;</span>
+            </div>
+            <div class="dropdown-content" id="payment-settings-dropdown"> -->
+                <!-- <div class="setting-item">
+                    <label for="default-payment">Default Payment Method</label>
+                    <select id="default-payment" name="default-payment">
+                        <option value="credit-card">Credit Card</option>
+                        <option value="debit-card">Debit Card</option>
+                        <option value="bank-account">Bank Account</option>
+                    </select>
+                </div> -->
+                
+                <!-- <div class="setting-item">
+                    <label for="currency">Preferred Currency</label>
+                    <select id="currency" name="currency">
+                        <option value="usd">USD</option>
+                        <option value="eur">EUR</option>
+                        <option value="gbp">GBP</option>
+                        <option value="inr">INR</option>
+                    </select>
+                </div> -->
+            <!-- </div>
+        </div> -->
+        
+        <!-- Security Settings Dropdown -->
+        <div class="setting-section">
+            <div class="dropdown" onclick="toggleDropdown('security-settings-dropdown')">
+                <h2>Security Settings</h2>
+                <span>&#9662;</span>
+            </div>
+            <div class="dropdown-content" id="security-settings-dropdown">
+                <!-- <div class="setting-item">
+                    <label for="two-factor">Two-Factor Authentication</label>
+                    <select id="two-factor" name="two-factor">
+                        <option value="enabled">Enabled</option>
+                        <option value="disabled">Disabled</option>
+                    </select>
+                </div> -->
+                
+                <div class="setting-item">
+                    <div class="dropdown" onclick="toggleDropdown('change-password-dropdown')">
+                        <h2>Change Password</h2>
+                        <span>&#9662;</span>
+                    </div>
+                    <div class="dropdown-content" id="change-password-dropdown">
+                        <div class="setting-item">
+                            <label for="current-password">Current Password</label>
+                            <input type="password" id="current-password" name="current-password">
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" name="new-password">
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label for="confirm-password">Confirm New Password</label>
+                            <input type="password" id="confirm-password" name="confirm-password">
+                        </div>
+                        
+                        <div class="setting-item">
+                            <button type="button" onclick="changePassword()">Change Password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="setting-item">
+            <button type="button" onclick="saveSettings()">Save Changes</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 Google Pay Replica. All rights reserved.</p>
+    </footer>
+
+    <script>
+       
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found, please login first');
+                return;
+            }
+        fetch('http://localhost:3000/api/user-details', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate the settings form with the user details
+            document.getElementById('username').value = data.name;
+            document.getElementById('email').value = data.email;
+            document.getElementById('phone').value = data.phone;
+        //     document.getElementById('default-payment').value = data.default_payment_method;
+        //     document.getElementById('currency').value = data.preferred_currency;
+        //     document.getElementById('two-factor').value = data.two_factor_auth;
+         })
+        .catch(error => {
+            console.error('Error fetching user details:', error);
+            alert('An error occurred while fetching details');
+        });
+    });
+
+    function saveSettings() {
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    // const defaultPaymentMethod = document.getElementById('default-payment').value;
+    // const currency = document.getElementById('currency').value;
+    // const twoFactorAuth = document.getElementById('two-factor').value;
+
+    fetch('http://localhost:3000/api/update-user-settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            username,
+            email,
+            phone
+            // default_payment_method: defaultPaymentMethod,
+            // preferred_currency: currency,
+            // two_factor_auth: twoFactorAuth
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Settings saved successfully!');
+            location.reload();  // Reload the page to show updated details
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error saving settings:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
+
+        function toggleDropdown(id) {
+            const dropdownContent = document.getElementById(id);
+            dropdownContent.classList.toggle('active');
+        }
+
+        function changePassword() {
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('You need to be logged in to change your password.');
+                return;
+            }
+
+            fetch('http://localhost:3000/api/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    currentPassword: currentPassword,
+                    newPassword: newPassword
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Password changed successfully');
+                    document.getElementById('current-password').value = '';
+                    document.getElementById('new-password').value = '';
+                    document.getElementById('confirm-password').value = '';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

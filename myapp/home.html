@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>payIT</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #ffffff; /* Set white as background color */
+            color: #000000; /* Set black as text color */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height:100%;
+            opacity: 0; /* Initially set opacity to 0 */
+            transition: opacity 1s ease; /* Add a transition effect */
+        }
+
+        /* When the content becomes visible, change the opacity to 1 */
+        .content.visible {
+            opacity: 1;
+        }
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: left;
+            background-color: rgba(246, 227, 227, 0.895); /* Semi-transparent black background */
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        .header .title {
+            font-family:Lorem ipsum dolor sit amet ;
+            font-size: 36px;
+            color: #2244de;
+        }
+        .header .btn-container {
+            display: flex;
+            gap: 10px;
+        }
+        .header .btn {
+            padding: 10px 10px;
+            background-color: #4285f4;
+            color: #ffffff;
+            border: 2px solid #4285f4;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .header .btn:hover {
+            transform: scale(1.1); /* Increase the size of the info box when hovered */
+            background-color: #357ae8;
+        }
+        .background-container {
+
+            background: url('ba.jpg') no-repeat center center;
+            background-size: cover;
+            flex: 1;
+            display: flex;
+            
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        
+        .info-container {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            height: 100%;
+        }
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px;
+            padding: 30px;
+            color: #000;
+            width: 300px; /* Adjusted size for larger info boxes */
+            height: 300px; /* Adjusted size for larger info boxes */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .info-box:hover {
+            transform: scale(1.1); /* Increase the size of the info box when hovered */
+        }
+        .info-box img {
+            width: 50px; /* Adjust the size of the images inside the info boxes */
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .info-box h3 {
+            font-size: 18px;
+            margin: 0 0 10px 0;
+        }
+        .info-box p {
+            font-size: 14px;
+            margin: 0;
+        }
+        .footer {
+            background: url('background.png') no-repeat center center;
+            background-size: cover; 
+            color: white;
+            padding: 15px;
+            text-align: center;
+            justify-content: bottom;
+            width: 100%; /* Ensure footer spans the full width */
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+    <div class="header">
+    
+        <div class="title"><img src="y2paylogo.png" alt="Y2Pay Logo" width="250" height="50" align="center"><b></b></div>
+        <div class="btn-container">
+            <a href="login.html" class="btn"><i><b>Login</b></i></a>
+            <a href="registration.html" class="btn"><i><b>SignUp</b></i></a>
+            <!-- <a href="index.html" class="btn"><i><b>DashBoard</b></i></a> -->
+        </div>
+    </div>
+    <div class="background-container">
+        <div class="info-container">
+            <div class="info-box">
+                <img src="secure.jpg" alt="Secure Payment">
+                <h3>Fast and Secure Payments</h3>
+                <p>Send money instantly with payIT.
+                    Send or receive money with zero fees, straight from your bank account to almost anyone.
+                     You can send or receive money even if your contact is not on Google Pay.
+                     Split lunch with a friend, pay the rent, or send money to mom.
+                </p>
+            </div>
+            <div class="info-box">
+                <img src="bill.png" alt="Bill Payment">
+                <h3>Easy Bill Payments</h3>
+                <p>Pay your bills conveniently.Recharge your mobile in a tap and finish with those monthly bills on here. 
+                    Now you're free to go shopping - online, or in a store.
+                     We've got you covered with easy access to past transactions, so you're always in control. </p>
+            </div>
+            <div class="info-box">
+                <img src="track.jpeg" alt="Track Transactions">
+                <h3>Track Transactions</h3>
+                <p>View your transaction history.
+                    Whether it's payments made, bills settled, or money sent or received, 
+                    payIT meticulously logs each transaction.
+                </p>
+            </div>
+        </div>
+        
+    </div>
+    <!-- <div class="footer" id="footer">
+        <p><b>&copy; 2024 Y2Pay. All rights reserved.</b></p>
+    </div> -->
+</div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Add the "visible" class to the content after a delay
+    setTimeout(function() {
+        document.querySelector(".content").classList.add("visible");
+    }, 500); // Adjust the delay as needed
+});
+</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Balance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 40px;
+            text-align: center;
+            width: 300px;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #4285f4;
+        }
+        .balance {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        .back-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .back-btn:hover {
+            background-color: #357ae8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Balance</h2>
+        <div class="balance" id="balance">₹0.00</div>
+        <button class="back-btn" onclick="goBack()">Back to Dashboard</button>
+    </div>
+
+    <script>
+         
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchBalance();
+        });
+
+        async function fetchBalance() {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                alert('Not authenticated');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/api/balance', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch balance');
+                }
+
+                const data = await response.json();
+                document.getElementById('balance').textContent = `₹${parseFloat(data.balance).toFixed(2)}`;
+            } catch (error) {
+                console.error('Error fetching balance:', error);
+                alert('Failed to fetch balance');
+            }
+        }
+        // Dummy balance for demonstration
+        // var balance = 1000.00;
+
+        // document.getElementById('balance').innerText = '₹' + balance.toFixed(2);
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
